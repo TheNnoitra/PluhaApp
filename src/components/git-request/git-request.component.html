@@ -4,7 +4,8 @@
 </div>
 
 <div>
-  <div *ngFor="let resultItem of resultItemList">
+<!--  <div *ngFor="let resultItem of resultItemList">-->
+    <div *ngFor="let resultItem of resultItemList$ | async">
     <app-response-item [resultItem]="resultItem"></app-response-item>
   </div>
 </div>

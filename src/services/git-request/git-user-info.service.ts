@@ -20,7 +20,7 @@ export class GitUserInfoService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'token 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'
+        'Authorization': 'token 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'
       })
     };
 
