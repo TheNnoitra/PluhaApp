@@ -8,10 +8,13 @@ import {interval, map, Subscription, take} from "rxjs";
 })
 export class LoaderComponent implements OnInit, OnDestroy {
 
-  public counter: number = 0;
+  // значение индикатора загрузки
+  public loaderIndicatorValue: number = 0;
 
-  private pausedValue: number = 0;
+  private lastValue: number = 0;
+  // observable interval
   private interval$ = interval(250);
+  // подписка на изменение значнеия (тик) интервала
   private subscriptions: Subscription = new Subscription();
 
   public ngOnInit() {
@@ -22,29 +25,32 @@ export class LoaderComponent implements OnInit, OnDestroy {
     this.unsubscribeFromCount();
   }
 
+  // действие подписки на изменение значнеия (тик) интервала
   public subscribeToCount(): void {
     if (this.subscriptions.closed) {
-      this.pausedValue = this.counter;
+      this.lastValue = this.loaderIndicatorValue;
       this.subscriptions = this.interval$
         .pipe(
-          take(100 - this.pausedValue),
-          map(i => ++i + this.pausedValue)
+          take(100 - this.lastValue),
+          map(i => ++i)
         )
         .subscribe(
-          svalue => this.counter = svalue
+          svalue => this.loaderIndicatorValue = svalue + this.lastValue
         );
     }
   }
 
+  // действие отписки на изменение значнеия (тик) интервала
   public unsubscribeFromCount() {
     if (!this.subscriptions.closed) {
       this.subscriptions.unsubscribe();
     }
   }
 
+  // действие отписки и обнуление значения индикатора загрузки
   public resetCounterValue() {
     this.unsubscribeFromCount();
-    this.counter = 0;
+    this.loaderIndicatorValue = 0;
   }
 
 }

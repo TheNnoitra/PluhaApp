@@ -1,5 +1,5 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {UserInfo} from '../../../../models/user-info';
+import {UserInfo} from '../../../interfaces/user-info';
 
 @Component({
   selector: 'app-response-item',

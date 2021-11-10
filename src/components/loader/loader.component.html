@@ -1,0 +1,10 @@
+<div>
+  <label for="counterString">Load indicator value: </label>
+  <span id="counterString">{{loaderIndicatorValue}}</span>
+
+  <div>
+    <button (click)="subscribeToCount()">Начать</button>
+    <button (click)="unsubscribeFromCount()">Остановить</button>
+    <button (click)="resetCounterValue()">Сбросить</button>
+  </div>
+</div>

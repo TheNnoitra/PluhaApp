@@ -1,0 +1,10 @@
+<div>
+  <label for="searchString">Имя пользователя: </label>
+  <input id="searchString" [formControl]="userNameControl"/>
+</div>
+
+<div>
+  <div *ngFor="let resultItem of resultItemList">
+    <app-response-item [resultItem]="resultItem"></app-response-item>
+  </div>
+</div>
