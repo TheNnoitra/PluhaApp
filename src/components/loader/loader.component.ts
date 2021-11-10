@@ -1,48 +1,52 @@
 import {Component} from '@angular/core';
-import {interval, filter, Observable, scan, BehaviorSubject, mergeMap} from "rxjs";
+import {
+  interval,
+  Observable,
+  scan,
+  BehaviorSubject,
+  switchMap,
+  takeWhile, map
+} from "rxjs";
+
+enum Action {
+  Start,
+  Pause,
+  Reset
+}
 
 @Component({
   selector: 'app-loader',
   templateUrl: './loader.component.html',
   styleUrls: ['./loader.component.scss']
 })
+
 export class LoaderComponent {
 
   // observable interval
   private interval$ = interval(250);
-  private variant$: BehaviorSubject<'start' | 'pause' | 'stop'> = new BehaviorSubject<'start' | 'pause' | 'stop'>('stop');
+  private variant$: BehaviorSubject<Action> = new BehaviorSubject<Action>(Action.Reset);
 
   // значение индикатора загрузки
   public loaderIndicatorValue$: Observable<number> = this.variant$.pipe(
-    mergeMap(val =>
-      this.interval$.pipe(
-        scan((sum, next) => {
-          if (val === 'start') {
-            return sum + 1;
-          }
-          else if (val === 'pause') {
-            return sum;
-          }
-          else if (val === 'stop'){
-            return 0;
-          }
-        }),
-        filter(val => val <= 100)
-      )
-    )
+    switchMap(acc => this.interval$.pipe(
+      map(value => acc)
+    )),
+    scan((acc, next) => {
+      return next === Action.Start ? ++acc : next === Action.Pause ? acc : 0;
+    }),
+    takeWhile(val => val <= 100)
   );
 
-
   public start(): void {
-    this.variant$.next('start');
+    this.variant$.next(Action.Start);
   }
 
   public pause(): void {
-    this.variant$.next('stop');
+    this.variant$.next(Action.Pause);
   }
 
   public reset(): void {
-    this.variant$.next('pause');
+    this.variant$.next(Action.Reset);
   }
 
 }
