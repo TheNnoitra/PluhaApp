@@ -2,9 +2,9 @@
   <label for="counterString">Load indicator value: </label>
   <span id="counterString">{{loaderIndicatorValue$ | async}}</span>
 
-<!--  <div>-->
-<!--    <button (click)="subscribeToCount()">Начать</button>-->
-<!--    <button (click)="unsubscribeFromCount()">Остановить</button>-->
-<!--    <button (click)="resetCounterValue()">Сбросить</button>-->
-<!--  </div>-->
+  <div>
+    <button (click)="start()">Начать</button>
+    <button (click)="pause()">Остановить</button>
+    <button (click)="reset()">Сбросить</button>
+  </div>
 </div>

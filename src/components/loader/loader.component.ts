@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {interval, map, Observable, reduce, take, takeWhile} from "rxjs";
+import {interval, filter, Observable, scan, BehaviorSubject, mergeMap} from "rxjs";
 
 @Component({
   selector: 'app-loader',
@@ -9,12 +9,40 @@ import {interval, map, Observable, reduce, take, takeWhile} from "rxjs";
 export class LoaderComponent {
 
   // observable interval
-  private interval$ = interval(50);
+  private interval$ = interval(250);
+  private variant$: BehaviorSubject<'start' | 'pause' | 'stop'> = new BehaviorSubject<'start' | 'pause' | 'stop'>('stop');
 
   // значение индикатора загрузки
-  public loaderIndicatorValue$: Observable<number> = this.interval$.pipe(
-     map(i => ++i),
-     take(100)
+  public loaderIndicatorValue$: Observable<number> = this.variant$.pipe(
+    mergeMap(val =>
+      this.interval$.pipe(
+        scan((sum, next) => {
+          if (val === 'start') {
+            return sum + 1;
+          }
+          else if (val === 'pause') {
+            return sum;
+          }
+          else if (val === 'stop'){
+            return 0;
+          }
+        }),
+        filter(val => val <= 100)
+      )
+    )
   );
+
+
+  public start(): void {
+    this.variant$.next('start');
+  }
+
+  public pause(): void {
+    this.variant$.next('stop');
+  }
+
+  public reset(): void {
+    this.variant$.next('pause');
+  }
 
 }
