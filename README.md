@@ -1,27 +1,10 @@
 # PluhaApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.0.1.
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+1. Создай проект, в котором, реализуй страницу, в которую можно попасть по нажатию кнопки.
+2. Далее в этой странице, нужно сделать rest api запрос (неважно куда, лишь бы он работал, можно посмотреть в нете открытые апишки). 
+   И тут самое главное уточнение, запрос должно происходить в input при вводе на клавиатуре. 
+   То есть, вводишь что-то в инпут - идет запрос. 
+   Но, запрос не должен отправляться, если между нажатиями клавиш не прошло больше 500мс
+3. Тут посложнее: с помощью rxjs реализовать свой индикатор загрузки. (В упрощенном варианте), 
+   то есть, есть какая то полоска, которая заполняется при нажатии на кнопку и при нажатии на кнопку СТОП останавливается, 
+   а на кнопку ПРОДОЛЖИТЬ - заполняется дальше.
